@@ -5,11 +5,9 @@ const elementToCopy = document.getElementById('exampleText');
 const sixteen = document.getElementById("sixteen");
 const RGB = document.getElementById("RGB");
 const copy = document.getElementById("copy");
-const result = document.getElementById("result");
-const resultValue = result.value;
+
 
 const handleRGB =()=>{
-    document.getElementById("notdefined").innerHTML = "";
     let a = Math.random();
     let x = Math.random();
     let c = Math.random();
@@ -19,7 +17,7 @@ const handleRGB =()=>{
     let r = parseInt(a);
     let g = parseInt(x);
     let b = parseInt(c);
-    RGB.style.backgroundColor = "rgb(41, 39, 39)";
+    RGB.style.backgroundColor = "black";
     RGB.style.color = "white";
     sixteen.style.background = "none";
     sixteen.style.color = "black";
@@ -45,12 +43,10 @@ const handleRGB =()=>{
 RGB.addEventListener("click", handleRGB);
 
 const handleSixteen =()=>{
-    document.getElementById("notdefined").innerHTML = "";
     box__color.style.backgroundColor = "white";
     random.value = "";
-    const randomColor = Math.floor(Math.random()*16777215).toString(16);
     RGB.style.background = "none";
-    sixteen.style.backgroundColor = "rgb(41, 39, 39)";
+    sixteen.style.backgroundColor = "black";
     sixteen.style.color = "white";
     RGB.style.color = "black";
     const handleRandom =()=>{
@@ -67,20 +63,17 @@ sixteen.addEventListener("click", handleSixteen);
 const handleCopy =()=>{
     window.getSelection(random).selectAllChildren(elementToCopy);
     document.execCommand('copy');
-    result.innerHTML = `Skopiowano ${random.value}`;
+    if(random.value != ""){
+        alert(`Skopiowanie: ${random.value}`);
+    }
 }
 
 copy.addEventListener("click", handleCopy);
 
-const handleCopyOut =()=>{
-    if(result.innerHTML = `Skopiowano ${random.value}`){
-        result.innerHTML = "Skopiuj do schowka";
+const Checker =()=>{
+    if(RGB.style.backgroundColor == "none" && sixteen.style.backgroundColor == "none"){
+        alert("Nie wybrałeś żadnego systemu!");
     }
 }
 
-
-copy.addEventListener("mouseout", handleCopyOut);
-
-
-
-
+btnRandom.addEventListener("click", Checker);

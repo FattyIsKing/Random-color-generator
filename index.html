@@ -11,24 +11,21 @@
 <body>
     <div class="box">
         <div class="box__item">
-            <h1>Generator kolorów</h1>
-            <div class="box__buttons">
-                <button id="RGB">RGB</button>
-                <button id="btnRandom">Generuj</button>
-                <button id="sixteen">HEX</button>
-            </div>    
+            
+            <div class="box_wrapper">
+                <div class="box_buttons">
+                    <button id="RGB">RGB</button>
+                    <button id="btnRandom">Generuj</button>
+                    <button id="sixteen">HEX</button>
+                </div>    
+    
+                
+                    <div id="exampleText">
+                        <input type="text" id="random" readonly></span>
+                    </div>
+                        <button id="copy">Skopiuj</button>
+            </div>
             <div class="box__color"></div>
-            <div id="Test">
-                <div id="exampleText">
-                    <input type="text" id="random" readonly></span>
-                </div>
-                <div id="exampleBtn">
-                    <button id="copy">Skopiuj <span id="result" class="tooltiptext">Skopiuj do schowka</span></button>
-                </div>
-            </div>
-            <div class="footer">
-                <span id="notdefined">Aby zacząć, musisz wybrać system.</span>
-            </div>
         </div>
     </div>
     <script src="src/script/index.js"></script>
