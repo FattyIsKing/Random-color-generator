@@ -5,9 +5,10 @@ const elementToCopy = document.getElementById('exampleText');
 const sixteen = document.getElementById("sixteen");
 const RGB = document.getElementById("RGB");
 const copy = document.getElementById("copy");
-
+let checker = 0;
 
 const handleRGB =()=>{
+    checker = 1;
     let a = Math.random();
     let x = Math.random();
     let c = Math.random();
@@ -43,6 +44,7 @@ const handleRGB =()=>{
 RGB.addEventListener("click", handleRGB);
 
 const handleSixteen =()=>{
+    checker = 1;
     box__color.style.backgroundColor = "white";
     random.value = "";
     RGB.style.background = "none";
@@ -71,7 +73,7 @@ const handleCopy =()=>{
 copy.addEventListener("click", handleCopy);
 
 const Checker =()=>{
-    if(RGB.style.backgroundColor == "none" && sixteen.style.backgroundColor == "none"){
+    if(checker == 0){
         alert("Nie wybrałeś żadnego systemu!");
     }
 }
