@@ -1,81 +1,127 @@
-const random = document.getElementById("random");
-const btnRandom = document.getElementById("btnRandom");
-const box__color = document.querySelector(".box__color");
-const elementToCopy = document.getElementById('exampleText');
-const sixteen = document.getElementById("sixteen");
-const RGB = document.getElementById("RGB");
-const copy = document.getElementById("copy");
-let checker = 0;
+const color = document.getElementById("color");
+const generate = document.getElementById("generate");
+const saved = document.getElementById("saved");
+const save = document.getElementById("save");
+const style = document.getElementById("style");
 
-const handleRGB =()=>{
-    checker = 1;
-    let a = Math.random();
-    let x = Math.random();
-    let c = Math.random();
-    a *= 255;
-    x *= 255;
-    c *= 255;
-    let r = parseInt(a);
-    let g = parseInt(x);
-    let b = parseInt(c);
-    RGB.style.backgroundColor = "black";
-    RGB.style.color = "white";
-    sixteen.style.background = "none";
-    sixteen.style.color = "black";
-    box__color.style.backgroundColor = "white";
-    random.value = "";
-    const handleRandom =()=>{
-        let a = Math.random();
-        let x = Math.random();
-        let c = Math.random();
-        a *= 255;
-        x *= 255;
-        c *= 255;
-        let r = parseInt(a);
-        let g = parseInt(x);
-        let b = parseInt(c);
-        box__color.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-        random.value = `rgb(${r}, ${g}, ${b})`;
-    }
+let rgb, r, g, b, hexColor, hexTranslate, checker = 0;
 
-    btnRandom.addEventListener("click", handleRandom);
+const savedColors = [];
+
+
+
+function hexToRgb(hex) {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
 }
 
-RGB.addEventListener("click", handleRGB);
 
-const handleSixteen =()=>{
-    checker = 1;
-    box__color.style.backgroundColor = "white";
-    random.value = "";
-    RGB.style.background = "none";
-    sixteen.style.backgroundColor = "black";
-    sixteen.style.color = "white";
-    RGB.style.color = "black";
-    const handleRandom =()=>{
-        const randomColor = Math.floor(Math.random()*16777215).toString(16);
-        box__color.style.backgroundColor = `#${randomColor}`;
-        random.value = `#${randomColor}`;    
-    }
-    btnRandom.addEventListener("click", handleRandom);
+function rgbToHex(r, g, b) {
+    hexTranslate = "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
 }
 
-sixteen.addEventListener("click", handleSixteen);
-
-
-const handleCopy =()=>{
-    window.getSelection(random).selectAllChildren(elementToCopy);
-    document.execCommand('copy');
-    if(random.value != ""){
-        alert(`Skopiowanie: ${random.value}`);
-    }
+const randomColorRGB =()=>{
+    r = parseInt(Math.random() * (255 - 1) + 1);
+    g = parseInt(Math.random() * (255 - 1) + 1);
+    b = parseInt(Math.random() * (255 - 1) + 1);
+    
+    rgb = `rgb(${r}, ${g}, ${b})`;
 }
 
-copy.addEventListener("click", handleCopy);
 
-const Checker =()=>{
-    if(checker == 0){
-        alert("Nie wybrałeś żadnego systemu!");
-    }
+const randomColorHex =()=>{
+    hexColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    
 }
 
-btnRandom.addEventListener("click", Checker);
+
+generate.addEventListener("click", ()=>{
+    if(style.innerHTML == "RGB"){
+        randomColorRGB();
+        color.value = rgb;
+        color.style.borderColor = rgb;
+        color.style.color = rgb;
+    }
+    else if(style.innerHTML == "Hex"){
+        randomColorHex();
+        color.value = hexColor;
+        color.style.borderColor = hexColor;
+        color.style.color = hexColor;
+    }
+});
+
+
+save.addEventListener("click", ()=>{
+    const savedColor = document.createElement("div");
+    const savedColorText = document.createElement("div");
+    const savedColorDrown = document.createElement("div");
+    
+    function check(item){
+        if(item == color.value){
+            checker += 1;
+        }
+    }
+
+    savedColors.forEach(check);
+
+    if(checker > 0){
+        Swal.fire(
+            'Uwaga!',
+            '<b>Taki kolor został już zapisany!</b>',
+            'error'
+
+        );
+        console.log(color.value);
+        checker = 0;
+    }
+    else if(color.value == ""){
+        Swal.fire(
+            'Uwaga!',
+            '<b>Nie wygenerowałeś koloru!</b>',
+            'error'
+
+        );
+    }
+    else{
+        savedColorText.innerHTML = `- ${color.value} <br>`;
+        savedColorDrown.style.backgroundColor = color.value;
+        savedColorDrown.style.height = "10px";
+        savedColorDrown.style.width = "10px";
+
+        savedColor.appendChild(savedColorText);
+        savedColor.appendChild(savedColorDrown);
+        savedColor.classList.add("colorHolder");
+        savedColors.push(`${color.value}`);
+    
+        saved.appendChild(savedColor);
+    }
+
+
+    
+});
+
+
+style.addEventListener("click", ()=>{
+    if(style.innerHTML == "RGB"){
+        style.innerHTML = "Hex";
+        
+        if(color.value != ""){
+            rgbToHex(r, g, b);
+            color.value = hexTranslate;
+        }
+
+    }
+    else if(style.innerHTML == "Hex"){
+        style.innerHTML = "RGB";
+
+        if(color.value != ""){
+            console.log(`${hexToRgb(color.value).r}, ${hexToRgb(color.value).g}, ${hexToRgb(color.value).b}`);
+
+            color.value = `rgb(${hexToRgb(color.value).r}, ${hexToRgb(color.value).g}, ${hexToRgb(color.value).b})`;
+        }
+    }
+});

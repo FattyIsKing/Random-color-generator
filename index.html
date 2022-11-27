@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="src/assets/heh1.png">
-    <title>Random color generator</title>
-    <link rel="stylesheet" href="src/style/style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Generator</title>
+    <link rel="stylesheet" href="./src/style/style.css">
 </head>
 <body>
-    <div class="box">
-        <div class="box__item">
-            
-            <div class="box_wrapper">
-                <div class="box_buttons">
-                    <button id="RGB">RGB</button>
-                    <button id="btnRandom">Generuj</button>
-                    <button id="sixteen">HEX</button>
-                </div>    
-    
-                
-                    <div id="exampleText">
-                        <input type="text" id="random" readonly></span>
-                    </div>
-                        <button id="copy">Skopiuj</button>
+    <div class="wrapper">
+        <div class="box__parent">
+            <div class="box__child box1">
+                <h2>Random color Generator</h2>
+                <div class="holder">
+                    <button id="generate">Generuj</button>
+                    <input type="text" id="color" readonly placeholder="Wygenerowany kolor">
+                    <button id="save">Zapisz</button>
+                    <button id="style">RGB</button>
+                </div>
             </div>
-            <div class="box__color"></div>
+            <hr>
+            <div class="box__child box2">
+                <p>Zapisane kolory:</p>
+                <p id="saved"></p>
+            </div>
         </div>
     </div>
-    <script src="src/script/index.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./src/script/index.js"></script>
 </body>
 </html>
