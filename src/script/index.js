@@ -4,11 +4,34 @@ const saved = document.getElementById("saved");
 const save = document.getElementById("save");
 const style = document.getElementById("style");
 
-let rgb, r, g, b, hexColor, hexTranslate, checker = 0;
+let rgb, r, g, b, hexColor, hexTranslate, checker = 0, i = 0;
 
 const savedColors = [];
 
+if(localStorage.getItem("ile") !== null){
+    
+    let ile = parseInt(localStorage.getItem("ile"));
+    console.log(ile);
+    for(i; i<=ile; i++){
+        
+        let savedColor = document.createElement("div");
+        let savedColorText = document.createElement("div");
+        let savedColorDrown = document.createElement("div");
+        
+        let color = `color${i}`;
 
+        savedColorText.innerHTML = `- ${localStorage.getItem(color)}<br>`;
+        savedColorDrown.style.backgroundColor = localStorage.getItem(color);
+        savedColorDrown.style.height = "10px";
+        savedColorDrown.style.width = "10px";
+
+        savedColor.appendChild(savedColorText);
+        savedColor.appendChild(savedColorDrown);
+        savedColor.classList.add("colorHolder");
+        
+        saved.appendChild(savedColor);
+    }
+}
 
 function hexToRgb(hex) {
     let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -98,6 +121,11 @@ save.addEventListener("click", ()=>{
         savedColors.push(`${color.value}`);
     
         saved.appendChild(savedColor);
+
+        
+        localStorage.setItem(`color${i}`, color.value);
+        localStorage.setItem(`ile`, i);
+        i+=1;
     }
 
 
