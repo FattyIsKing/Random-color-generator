@@ -92,7 +92,7 @@ input{
 
 @media (width <= 450px){
     .box__parent{
-        width: 350px;
+        width: 325px;
     }
     input{
         width: 110px;
